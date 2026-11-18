@@ -76,7 +76,7 @@ function RealMoon({ size = 64 }: { size?: number }) {
       }}
     >
       <img
-        src="/moon.jpg"
+        src="./moon.jpg"
         alt="Live Lunar Phase"
         style={{
           width: '100%',

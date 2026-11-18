@@ -189,7 +189,7 @@ export function App() {
             }}
           >
             <img
-              src="/hrl-logo.png"
+              src="./hrl-logo.png"
               alt="HRL Logo"
               style={{
                 width: '100%',
@@ -976,7 +976,7 @@ export function App() {
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <img
-              src="/hrl-logo.png"
+              src="./hrl-logo.png"
               alt="HRL International"
               style={{
                 width: 22,
