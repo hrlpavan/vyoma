@@ -149,6 +149,10 @@ export function App() {
 
   return (
     <div style={{ maxWidth: 1120, margin: '0 auto', padding: '24px 20px 56px' }}>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
       {/* Floating Liquid Glass Header */}
       <header
         className="glass-card"
@@ -264,6 +268,8 @@ export function App() {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <form
+            role="search"
+            aria-label="Search city air quality"
             onSubmit={handleCustomCity}
             style={{
               display: 'flex',
@@ -275,9 +281,10 @@ export function App() {
               gap: 7,
             }}
           >
-            <Search size={14} color="var(--text-tertiary)" />
+            <Search size={14} color="var(--text-tertiary)" aria-hidden="true" />
             <input
               type="text"
+              aria-label="Add city or location"
               placeholder={searchingCity ? 'Locating...' : 'Add location...'}
               value={customCityInput}
               onChange={(e) => setCustomCityInput(e.target.value)}
@@ -296,10 +303,12 @@ export function App() {
           <button
             type="button"
             className={`pill-btn ${showKeyInput ? 'active' : ''}`}
+            aria-expanded={showKeyInput}
+            aria-label="Configure Gemini API Key"
             onClick={() => setShowKeyInput((s) => !s)}
             style={{ padding: '8px 14px' }}
           >
-            <KeyRound size={14} />
+            <KeyRound size={14} aria-hidden="true" />
             {apiKey ? 'Gemini Connected' : 'Gemini API Key'}
           </button>
         </div>
@@ -319,6 +328,7 @@ export function App() {
         >
           <input
             type="password"
+            aria-label="Gemini API Key"
             placeholder="Paste Gemini API key (optional — works offline too)"
             value={apiKey}
             onChange={(e) => setApiKey(e.target.value)}
@@ -346,11 +356,15 @@ export function App() {
       )}
 
       {/* City Pills */}
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}>
+      <nav
+        aria-label="City selector"
+        style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 22 }}
+      >
         {cities.map((city) => (
           <button
             key={city.name}
             type="button"
+            aria-pressed={selectedCity.name === city.name}
             className={`pill-btn ${selectedCity.name === city.name ? 'active' : ''}`}
             onClick={() => setSelectedCity(city)}
           >
@@ -360,8 +374,9 @@ export function App() {
             </span>
           </button>
         ))}
-      </div>
+      </nav>
 
+      <main id="main-content">
       {/* Live Day/Night Apple Weather Card */}
       <AppleWeatherCard cityName={selectedCity.name} weather={weather} />
 
@@ -377,8 +392,13 @@ export function App() {
       >
         {/* Left Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20, height: '100%' }}>
-          {/* AQI Card */}
-          <section className="glass-card" style={{ padding: 24 }}>
+          {/* Air Quality Card */}
+          <section
+            className="glass-card"
+            style={{ padding: 24 }}
+            aria-label="Air Quality Summary"
+            aria-live="polite"
+          >
             <div
               style={{
                 display: 'flex',
@@ -571,6 +591,7 @@ export function App() {
                   <button
                     key={m}
                     type="button"
+                    aria-pressed={profile.members.includes(m)}
                     className={`pill-btn ${profile.members.includes(m) ? 'active' : ''}`}
                     onClick={() => toggleArrayItem('members', m)}
                     style={{
@@ -601,6 +622,7 @@ export function App() {
                   <button
                     key={c}
                     type="button"
+                    aria-pressed={profile.commute === c}
                     className={`pill-btn ${profile.commute === c ? 'active' : ''}`}
                     onClick={() => setProfile((p) => ({ ...p, commute: c }))}
                     style={{
@@ -631,6 +653,7 @@ export function App() {
                   <button
                     key={i}
                     type="button"
+                    aria-pressed={profile.indoor.includes(i)}
                     className={`pill-btn ${profile.indoor.includes(i) ? 'active' : ''}`}
                     onClick={() => toggleArrayItem('indoor', i)}
                     style={{
@@ -782,6 +805,7 @@ export function App() {
                   <button
                     key={swap.id}
                     type="button"
+                    aria-pressed={active}
                     onClick={() => toggleSwap(swap.id)}
                     style={{
                       textAlign: 'left',
@@ -950,6 +974,7 @@ export function App() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* HRL Proprietary & Patent Footer */}
       <footer
